@@ -1,7 +1,7 @@
 import { Config, PRContext, GateResult } from "../types.js";
 import { Octokit } from "@octokit/rest";
 
-const TRUSTED_ASSOCIATIONS = ["MEMBER", "OWNER"];
+const TRUSTED_ASSOCIATIONS = ["MEMBER", "OWNER", "COLLABORATOR", "CONTRIBUTOR"];
 
 export async function checkActor(
   pr: PRContext,
