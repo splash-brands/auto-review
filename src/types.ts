@@ -23,7 +23,7 @@ export const DEFAULT_CONFIG: Config = {
   maxLinesChanged: 200,
   skipDraftPRs: true,
   skipForkPRs: true,
-  model: "gpt-4o",
+  model: "gpt-4o-mini",
   apiUnavailablePolicy: "skip",
 
   trustedTeams: [],
