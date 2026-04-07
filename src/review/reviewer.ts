@@ -89,9 +89,14 @@ export async function runReview(
   repoRules: string,
   token: string,
 ): Promise<ReviewOutput> {
-  const truncatedDiff = truncateDiff(pr.diff, config.maxTokenBudget);
+  // GitHub Models API has a hard 8000 token limit across all models.
+  // Budget: ~1500 system prompt + ~500 PR metadata + ~2000 rules + ~3500 diff + ~500 output buffer
+  const rulesBudget = 2000;
+  const diffBudget = Math.min(config.maxTokenBudget, 3500);
+  const truncatedRules = truncateText(repoRules, rulesBudget);
+  const truncatedDiff = truncateDiff(pr.diff, diffBudget);
 
-  const userMessage = buildUserMessage(pr, truncatedDiff, repoRules, config);
+  const userMessage = buildUserMessage(pr, truncatedDiff, truncatedRules, config);
 
   const response: AIResponse = await callModel(
     token,
@@ -106,6 +111,12 @@ export async function runReview(
     result,
     tokenUsage: response.usage,
   };
+}
+
+function truncateText(text: string, maxTokens: number): string {
+  const maxChars = maxTokens * 4;
+  if (text.length <= maxChars) return text;
+  return text.substring(0, maxChars) + "\n\n[... truncated to fit token budget ...]";
 }
 
 function buildUserMessage(
