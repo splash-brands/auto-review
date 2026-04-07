@@ -1,0 +1,11 @@
+node_modules/
+*.d.ts
+*.d.ts.map
+*.js.map
+
+# Keep dist/index.js (required for GitHub Actions)
+# but ignore declaration files bundled by ncc
+dist/*.d.ts
+dist/*.d.ts.map
+dist/**/*.d.ts
+dist/**/*.d.ts.map

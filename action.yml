@@ -1,0 +1,26 @@
+name: "PR Auto-Approve"
+description: "AI-powered PR auto-approval with deterministic safety gates"
+author: "pr-auto-approve"
+
+branding:
+  icon: check-circle
+  color: green
+
+inputs:
+  github-token:
+    description: "GitHub token (needs checks:write + contents:read)"
+    required: true
+  config-path:
+    description: "Path to config file (read from base branch)"
+    required: false
+    default: ".pr-auto-approve.yml"
+
+outputs:
+  approved:
+    description: "Whether the check passed (true/false)"
+  results:
+    description: "JSON string with all gate and review results"
+
+runs:
+  using: "node20"
+  main: "dist/index.js"

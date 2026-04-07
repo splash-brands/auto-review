@@ -1,0 +1,40 @@
+maxFiles: 5
+maxLinesChanged: 200
+skipDraftPRs: true
+skipForkPRs: true
+model: "openai/gpt-4o"
+apiUnavailablePolicy: "skip"
+
+trustedTeams:
+  - "engineering"
+  - "platform"
+
+sensitivePaths:
+  - "db/migrations/**"
+  - "**/auth/**"
+  - ".github/**"
+  - "Dockerfile*"
+  - "**/payment*/**"
+
+secretPatterns:
+  - "(?i)(api[_-]?key|secret|password|token)\\s*[:=]\\s*['\"][^'\"]{8,}"
+  - "(?i)BEGIN\\s+(RSA|DSA|EC|OPENSSH)\\s+PRIVATE\\s+KEY"
+
+allowlistPaths:
+  - "docs/**"
+  - "**/*.md"
+  - "tests/**"
+  - "**/*_test.*"
+  - "**/*.test.*"
+
+rulesPath:
+  - ".claude/skills/"
+  - "CLAUDE.md"
+  - ".cursorrules"
+  - ".github/copilot-instructions.md"
+
+sections:
+  adherence: true
+  problemStatement: true
+  testCoverage: true
+  correctness: true
